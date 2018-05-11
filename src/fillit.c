@@ -14,15 +14,35 @@
 
 char	**make_pieces(unsigned int size)
 {
-	char** pieces = (char**)malloc(sizeof(char**) * (size + 1));
-	for (unsigned int i=0; i<=size+1; i++)
-		pieces[i] = ft_strnew(20);
+	char	**pieces;
+	int		i;
+
+	pieces = (char**)malloc(sizeof(char**) * (size + 1));
+	i = 0;
+	while (i < size)
+		pieces[i++] = ft_strnew(20);
+	pieces[i] = NULL;
 	return (pieces);
+}
+
+char	**make_board(unsigned int size)
+{
+	char	**board;
+	int		i;
+
+	board = (char**)malloc(sizeof(char**) * (size + 1));
+	i = 0;
+	while (i < size)
+		board[i++] = ft_strnew(size);
+	board[i] = NULL;
+	return (board);
 }
 
 void	unmake_tab(char **pieces)
 {
-	char *p = *pieces;
+	char	*p;
+
+	p = *pieces;
 	while (p)
 		ft_strdel(&p);
 	free(pieces);
