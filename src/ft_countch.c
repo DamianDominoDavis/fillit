@@ -12,10 +12,13 @@
 
 #include "../includes/fillit.h"
 
-int		ft_countch(const char* str, const unsigned char ch)
+int		ft_countch(const char *str, const unsigned char ch)
 {
-	char *s = (char*)str;
-	int i = 0;
+	char	*s;
+	int		i;
+
+	s = (char*)str;
+	i = 0;
 	while (*s)
 		if (*s++ == ch)
 			i++;

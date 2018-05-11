@@ -12,12 +12,21 @@
 
 #include "../includes/fillit.h"
 
-char	*ft_stripch(const char* str, unsigned int n, const unsigned char ch)
+char	*ft_stripch(const char *str, unsigned int n, const unsigned char ch)
 {
-	char *out;
+	char	*out;
+	char	*o;
+	char	*s;
+
+	if (!str)
+		return (NULL);
+	if (n == 0 || ft_countch(str, ch) == 0)
+		return (ft_strdup(str));
+	s = (char*)str;
 	out = ft_strnew(ft_strlen(str) - ft_countch(str, ch));
-	char *o = out;
-	char *s = (char*)str;
+	o = out;
+	if (!o)
+		return (NULL);
 	while (n--)
 		if (*s == ch)
 			s++;

@@ -14,8 +14,8 @@
 
 void	ft_strshift(char *str, unsigned int n)
 {
-	char *buf;
-	int len;
+	char	*buf;
+	int		len;
 
 	if (!str)
 		return ;

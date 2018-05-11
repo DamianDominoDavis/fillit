@@ -14,8 +14,8 @@
 
 char	**make_pieces(unsigned int size)
 {
-	char	**pieces;
-	int		i;
+	char				**pieces;
+	unsigned int		i;
 
 	pieces = (char**)malloc(sizeof(char**) * (size + 1));
 	i = 0;
@@ -27,8 +27,8 @@ char	**make_pieces(unsigned int size)
 
 char	**make_board(unsigned int size)
 {
-	char	**board;
-	int		i;
+	char				**board;
+	unsigned int		i;
 
 	board = (char**)malloc(sizeof(char**) * (size + 1));
 	i = 0;
@@ -47,4 +47,27 @@ void	unmake_tab(char **pieces)
 		ft_strdel(&p);
 	free(pieces);
 	pieces = NULL;
+}
+
+void	solve(char **pieces)
+{
+	int		n;
+	char	**board;
+
+	if (!pieces)
+	{
+		ft_putendl_fd("solve: did not recieve any pieces.", 1);
+		return ;
+	}
+	n = 0;
+	while (pieces && pieces[n] && pieces[n][0])
+		n++;
+	board = make_board(n);
+	if (!board)
+	{
+		ft_putendl_fd("solve: could not allocate board.", 1);
+		unmake_tab(pieces);
+		return ;
+	}
+	// recursive logic for couldplace, place, unplace
 }

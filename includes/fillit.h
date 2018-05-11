@@ -27,16 +27,16 @@ int		unplace(char *board, int bsize, int pos, char *shape);
 
 void	tetprint(char* tet);
 
-int		ft_countch(const char* str, const unsigned char ch);
-char	*ft_stripch(const char* str, unsigned int n, const unsigned char ch);
-char	*ft_stripnl(const char* str);
+int		ft_countch(const char *str, const unsigned char ch);
+char	*ft_stripch(const char *str, unsigned int n, const unsigned char ch);
+char	*ft_stripnl(const char *str);
 
 void	ft_strfill(char *str, char c);
 void	ft_strnfill(char *str, unsigned char c, unsigned int n);
 
 void	ft_strshift(char *str, unsigned int n);
 
-int		isPattern(char* pattern);
-void	readPatternFile(const char *path, char *save[]);
+int		is_pattern(char* pattern);
+void	read_pattern_file(const char *path, char *save[]);
 
 #endif

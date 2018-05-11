@@ -12,12 +12,11 @@
 
 #include "../includes/fillit.h"
 
-void	readPatternFile(const char *path, char **save)
+void	read_pattern_file(const char *path, char **save)
 {
-	int fd;
-	char candidate[21];
-	char *s;
-	char nl[1];
+	int		fd;
+	char	candidate[21];
+	char	*s;
 
 	candidate[20] = '\0';
 	if (!path || !save)
@@ -26,46 +25,49 @@ void	readPatternFile(const char *path, char **save)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_putendl_fd("readPatternFile: could not read from file.", 1);
+		ft_putendl_fd("read_pattern_file: could not read from file.", 1);
 		return ;
 	}
 	while (save && read(fd, candidate, 20) == 20)
-		if (isPattern(candidate))
+		if (is_pattern(candidate))
 		{
 			ft_strncpy(s, ft_stripnl(candidate), ft_strlen(candidate));
-			tetprint(s); //<-- THIS WORKS, but main's call doesn't...
+			tetprint(s);
 			s++;
-			if (read(fd, nl, 1) == 0)
-				break;
-			else if (nl[0] != '\n')
+			if (read(fd, candidate, 1) == 0)
+				break ;
+			else if (candidate[0] != '\n')
 			{
-				ft_putendl_fd("readPatternFile: pattern separator must be a single newline character.", 1);
+				ft_putendl_fd("read_pattern_file: pattern separator must be a single newline character.", 1);
 				unmake_tab(save);
 			}
 		}
 		else
 		{
-			ft_putstr_fd("readPatternFile: invalid pattern, ", 1);
+			ft_putstr_fd("read_pattern_file: invalid pattern, ", 1);
 			ft_putendl_fd(candidate, 1);
 			unmake_tab(save);
 		}
 	if (!save)
 		ft_putendl_fd("readPattternFile: did not exit sucessfully.", 1);
+	solve(save);
 }
 
-int	isPattern(char* pattern)
+int		is_pattern(char *pattern)
 {
+	int x;
+	int n;
+
 	if (!pattern || strlen(pattern) != 20
 		|| pattern[4] != '\n'
 		|| pattern[4] != pattern[9]
-		|| pattern[9] != pattern[14]
-		)
+		|| pattern[9] != pattern[14])
 	{
-		ft_putendl_fd("isPattern: argstest fail", 1);
-		return 0;
+		ft_putendl_fd("is_pattern: argstest fail", 1);
+		return (0);
 	}
-	int x = 0;
-	int n = 0;
+	x = 0;
+	n = 0;
 	while (x <= 20)
 	{
 		if (pattern[x] == '#')
@@ -85,14 +87,14 @@ int	isPattern(char* pattern)
 	}
 	if (n != 6 && n != 8)
 	{
-		ft_putstr_fd("isPattern: ntest fail, ", 1);
+		ft_putstr_fd("is_pattern: ntest fail, ", 1);
 		ft_putendl_fd(ft_itoa(n), 1);
-		return 0;
+		return (0);
 	}
 	return (1);
 }
 
-void	tetprint(char* tet)
+void	tetprint(char *tet)
 {
 	int i;
 

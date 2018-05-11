@@ -12,7 +12,7 @@
 
 #include "../includes/fillit.h"
 
-char	*ft_stripnl(const char* str)
+char	*ft_stripnl(const char *str)
 {
 	return (ft_stripch(str, ft_strlen(str), '\n'));
 }
