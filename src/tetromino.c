@@ -31,9 +31,7 @@ void	read_pattern_file(const char *path, char **save)
 	while (save && read(fd, candidate, 20) == 20)
 		if (is_pattern(candidate))
 		{
-			ft_strncpy(s, ft_stripnl(candidate), ft_strlen(candidate));
-			tetprint(s);
-			s++;
+			ft_strncpy(s++, ft_stripnl(candidate), ft_strlen(candidate));
 			if (read(fd, candidate, 1) == 0)
 				break ;
 			else if (candidate[0] != '\n')
@@ -107,4 +105,23 @@ void	tetprint(char *tet)
 		write(1, "\n", 1);
 	}
 	write(1, "\n", 1);
+}
+
+void	revolve(char *p)
+{
+	char t;
+	int i;
+
+	while (p[0] != '#' && p[1] != '#' && p[2] != '#' && p[3] != '#')
+		ft_strshift(p, 4);
+	while (p[0] != '#' && p[4] != '#' && p[8] != '#' && p[12] != '#')
+	{
+		i = 0;
+		while (i < 4)
+		{
+			t = p[4 * i];
+			p[4 * i] = p[4 * i + 3];
+			p[4 * i + 3] = t;
+		}
+	}
 }

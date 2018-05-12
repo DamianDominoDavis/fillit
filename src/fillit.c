@@ -35,7 +35,7 @@ char	**make_board(unsigned int size)
 	while (i < size)
 	{
 		board[i] = ft_strnew(size);
-		ft_strfill(board[i++]);
+		ft_strfill(board[i++], '.');
 	}
 	board[i] = NULL;
 	return (board);
@@ -56,6 +56,7 @@ void	solve(char **pieces)
 {
 	int		n;
 	char	**board;
+	int		i;
 
 	if (!pieces)
 	{
@@ -73,4 +74,9 @@ void	solve(char **pieces)
 		return ;
 	}
 	// recursive logic for couldplace, place, unplace
+	i = -1;
+	while (++i < n)
+	{
+		;//
+	}
 }

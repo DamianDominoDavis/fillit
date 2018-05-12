@@ -17,7 +17,6 @@ int		main(int c, char **v)
 {
 	unsigned int	magic;
 	char			**pieces;
-	unsigned int	i;
 
 	magic = 26;
 	pieces = make_pieces(magic);
