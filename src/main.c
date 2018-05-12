@@ -17,6 +17,7 @@ int		main(int c, char **v)
 {
 	unsigned int	magic;
 	char			**pieces;
+	int				i;
 
 	magic = 26;
 	pieces = make_pieces(magic);
@@ -32,5 +33,9 @@ int		main(int c, char **v)
 		ft_putendl_fd("usage: fillit pieces.txt", 2);
 		return (0);
 	}
+	i = 0;
+	ft_putendl("Accepted pieces:");
+	while (pieces[i])
+		tetprint(pieces[i++]);
 	return (0);
 }

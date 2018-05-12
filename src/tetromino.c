@@ -21,7 +21,6 @@ void	read_pattern_file(const char *path, char **save)
 	candidate[20] = '\0';
 	if (!path || !save)
 		return ;
-	s = *save;
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
@@ -31,7 +30,8 @@ void	read_pattern_file(const char *path, char **save)
 	while (save && read(fd, candidate, 20) == 20)
 		if (is_pattern(candidate))
 		{
-			ft_strncpy(s++, ft_stripnl(candidate), ft_strlen(candidate));
+			s = *save++;
+			ft_strncpy(s, ft_stripnl(candidate), ft_strlen(candidate));
 			if (read(fd, candidate, 1) == 0)
 				break ;
 			else if (candidate[0] != '\n')
@@ -48,7 +48,6 @@ void	read_pattern_file(const char *path, char **save)
 		}
 	if (!save)
 		ft_putendl_fd("readPattternFile: did not exit sucessfully.", 1);
-	solve(save);
 }
 
 int		is_pattern(char *pattern)
@@ -96,7 +95,7 @@ void	tetprint(char *tet)
 {
 	int i;
 
-	if (!tet)
+	if (!tet || (tet[0] != '.' && tet[0] != '#'))
 		return ;
 	i = 0;
 	while (i < 4)

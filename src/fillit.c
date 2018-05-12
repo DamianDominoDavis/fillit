@@ -52,31 +52,8 @@ void	unmake_tab(char **pieces)
 	pieces = NULL;
 }
 
-void	solve(char **pieces)
+void	solve(char **pieces, char **board)
 {
-	int		n;
-	char	**board;
-	int		i;
-
-	if (!pieces)
-	{
-		ft_putendl_fd("solve: did not recieve any pieces.", 1);
-		return ;
-	}
-	n = 0;
-	while (pieces && pieces[n] && pieces[n][0])
-		n++;
-	board = make_board(n);
-	if (!board)
-	{
-		ft_putendl_fd("solve: could not allocate board.", 1);
-		unmake_tab(pieces);
-		return ;
-	}
-	// recursive logic for couldplace, place, unplace
-	i = -1;
-	while (++i < n)
-	{
-		;//
-	}
+	(void)pieces;
+	(void)board;
 }
