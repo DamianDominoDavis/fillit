@@ -33,7 +33,10 @@ char	**make_board(unsigned int size)
 	board = (char**)malloc(sizeof(char**) * (size + 1));
 	i = 0;
 	while (i < size)
-		board[i++] = ft_strnew(size);
+	{
+		board[i] = ft_strnew(size);
+		ft_strfill(board[i++]);
+	}
 	board[i] = NULL;
 	return (board);
 }
