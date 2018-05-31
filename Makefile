@@ -6,7 +6,7 @@
 #    By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/01 19:50:07 by cbrill            #+#    #+#              #
-#    Updated: 2018/05/10 20:22:58 by cbrill           ###   ########.fr        #
+#    Updated: 2018/05/31 12:26:06 by cbrill           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,14 @@ INC = -I includes
 
 LIBFT =	src/libft/libft.a
 
-
+LSRC = http://github.com/DamianDominoDavis/libft
 
 CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
+
 
 $(NAME): $(LIBFT) $(OBJ)
 		$(CC) $(FLAGS) $(INC) $(OBJ) -o $(NAME) $(LIBFT)
@@ -39,6 +40,8 @@ $(OBJ): $(LIBFT)
 		$(CC) $(FLAGS) -c $(SRC_POS)
 
 $(LIBFT):
+		git rm -rf src/libft
+		git submodule add $(LSRC) src/libft
 		make -C ./src/libft/
 
 clean:
