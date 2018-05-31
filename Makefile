@@ -6,7 +6,7 @@
 #    By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/01 19:50:07 by cbrill            #+#    #+#              #
-#    Updated: 2018/05/31 12:26:06 by cbrill           ###   ########.fr        #
+#    Updated: 2018/05/31 12:28:18 by cbrill           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ INC = -I includes
 LIBFT =	src/libft/libft.a
 
 LSRC = http://github.com/DamianDominoDavis/libft
+
+TARGET = tet.txt
 
 CC = gcc
 
@@ -57,6 +59,6 @@ re: fclean all
 just: all clean
 
 do: just
-		./$(NAME)
+		./$(NAME) $(TARGET)
 
 .PHONY : all, re, clean, flcean, just, do
