@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:46:00 by cbrill            #+#    #+#             */
-/*   Updated: 2018/05/10 20:49:09 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/05/31 13:45:40 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void	read_pattern_file(const char *path, char **save)
 		if (is_pattern(candidate))
 		{
 			s = *save++;
+			while (ft_strchr(candidate, '#') - &candidate[0] >= 4)		//revolve up
+				ft_strshift(candidate, 5);
+			while (candidate[0] != '#' && candidate[5] != '#' && candidate[10] != '#' && candidate[15] != '#')
+				ft_strrevolve(candidate, 5, 4);	// revolve left
 			ft_strncpy(s, ft_stripnl(candidate), ft_strlen(candidate));
 			if (read(fd, candidate, 1) == 0)
 				break ;
@@ -106,21 +110,23 @@ void	tetprint(char *tet)
 	write(1, "\n", 1);
 }
 
-void	revolve(char *p)
+void	ft_strrevolve(char *str, unsigned int wide, unsigned int tall)
 {
-	char t;
-	int i;
+	unsigned int row;
+	unsigned int w;
+	char tmp;
 
-	while (p[0] != '#' && p[1] != '#' && p[2] != '#' && p[3] != '#')
-		ft_strshift(p, 4);
-	while (p[0] != '#' && p[4] != '#' && p[8] != '#' && p[12] != '#')
+	row = 0;
+	while (row < tall)
 	{
-		i = 0;
-		while (i < 4)
+		tmp = str[row*5];
+		w = 0;
+		while (w < wide - 1)
 		{
-			t = p[4 * i];
-			p[4 * i] = p[4 * i + 3];
-			p[4 * i + 3] = t;
+			str[row*5 + w] = str[row*5 + w + 1];
+			w++;
 		}
+		str[row*5 + wide - 1] = tmp;
+		row++;
 	}
 }

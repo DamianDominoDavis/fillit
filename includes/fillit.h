@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:39:39 by cbrill            #+#    #+#             */
-/*   Updated: 2018/05/10 17:39:46 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/05/31 13:46:41 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_strfill(char *str, char c);
 void	ft_strnfill(char *str, unsigned char c, unsigned int n);
 
 void	ft_strshift(char *str, unsigned int n);
+void	ft_strrevolve(char *str, unsigned int wide, unsigned int tall);
 
 int		is_pattern(char* pattern);
 void	read_pattern_file(const char *path, char *save[]);
