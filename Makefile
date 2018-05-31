@@ -6,7 +6,7 @@
 #    By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/01 19:50:07 by cbrill            #+#    #+#              #
-#    Updated: 2018/05/31 12:28:18 by cbrill           ###   ########.fr        #
+#    Updated: 2018/05/31 15:14:47 by cbrill           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,9 +42,9 @@ $(OBJ): $(LIBFT)
 		$(CC) $(FLAGS) -c $(SRC_POS)
 
 $(LIBFT):
-		git rm -rf src/libft
-		git submodule add $(LSRC) src/libft
-		make -C ./src/libft/
+		rm -rf src/libft
+		git clone $(LSRC) src/libft
+		make -C src/libft
 
 clean:
 		rm -f $(OBJ)

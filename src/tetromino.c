@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:46:00 by cbrill            #+#    #+#             */
-/*   Updated: 2018/05/31 13:45:40 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/05/31 15:12:04 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	read_pattern_file(const char *path, char **save)
 {
 	int		fd;
 	char	candidate[21];
-	char	*s;
-
+	
 	candidate[20] = '\0';
 	if (!path || !save)
 		return ;
@@ -30,12 +29,11 @@ void	read_pattern_file(const char *path, char **save)
 	while (save && read(fd, candidate, 20) == 20)
 		if (is_pattern(candidate))
 		{
-			s = *save++;
 			while (ft_strchr(candidate, '#') - &candidate[0] >= 4)		//revolve up
 				ft_strshift(candidate, 5);
 			while (candidate[0] != '#' && candidate[5] != '#' && candidate[10] != '#' && candidate[15] != '#')
 				ft_strrevolve(candidate, 5, 4);	// revolve left
-			ft_strncpy(s, ft_stripnl(candidate), ft_strlen(candidate));
+			ft_strncpy(*(save++), ft_stripnl(candidate), ft_strlen(candidate));
 			if (read(fd, candidate, 1) == 0)
 				break ;
 			else if (candidate[0] != '\n')

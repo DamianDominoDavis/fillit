@@ -1,3 +1,3 @@
-[submodule "src/libft"]
-	path = src/libft
-	url = http://github.com/DamianDominoDavis/libft
+[submodule "libft"]
+	path = libft
+	url = http://github.com/damiandominodavis/libft
