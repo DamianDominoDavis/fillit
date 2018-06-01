@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   streamlined.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/07 13:46:04 by cbrill            #+#    #+#             */
-/*   Updated: 2018/05/10 20:49:03 by cbrill           ###   ########.fr       */
+/*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
+/*   Updated: 2018/05/31 18:43:48 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
 
+int		nope(char *msg, int fd, int rvalue)
+{
+	write(fd, msg, strlen(msg));
+	write(fd, "\n", 1);
+	return (rvalue);
+}
+
 int		main(int c, char **v)
 {
-	unsigned int	magic;
-	char			**pieces;
-	int				i;
+	int count;
+	char pieces[26];
 
-	magic = 26;
-	pieces = make_pieces(magic);
-	if (!pieces)
-	{
-		ft_putendl_fd("ABORT: could not allocate space for pieces.", 2);
-		return (0);
-	}
-	if (c == 2 && v[1])
-		read_pattern_file(v[1], pieces);
-	else
-	{
-		ft_putendl_fd("usage: fillit pieces.txt", 2);
-		return (0);
-	}
-	i = 0;
-	ft_putendl("Accepted pieces:");
-	while (pieces[i])
-		tetprint(pieces[i++]);
-	return (0);
+	if (c != 2)
+		return nope("usage: fillit patterns.txt", 1, 1);
+	if ((count = readpieces(open(v[1], O_RDONLY), pieces)) == 0)
+		return nope("could not read pieces.", 2, 2);
+	
+ 	return (0);
 }

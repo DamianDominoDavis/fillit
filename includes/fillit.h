@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:39:39 by cbrill            #+#    #+#             */
-/*   Updated: 2018/05/31 13:46:41 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/05/31 18:17:40 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "../src/libft/libft.h"
+# define ERROR_RETURN(i) { ft_putendl("error"); return (i); }
 
 char	**make_pieces(unsigned int size);
 void	unmake_tab(char **tab);
