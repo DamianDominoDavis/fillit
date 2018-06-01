@@ -12,7 +12,7 @@
 
 NAME = fillit
 
-SRC = fillit.c ft_countch.c ft_strfill.c ft_stripch.c ft_stripnl.c ft_strnfill.c main.c tetromino.c ft_strshift.c
+SRC = ft_countch.c ft_stripch.c ft_stripnl.c streamlined.c ft_strshift.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -44,7 +44,7 @@ $(OBJ): $(LIBFT)
 $(LIBFT):
 		rm -rf src/libft
 		git clone $(LSRC) src/libft
-		make -C src/libft
+			make -C src/libft
 
 clean:
 		rm -f $(OBJ)
