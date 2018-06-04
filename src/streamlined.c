@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/04 16:17:48 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/04 16:45:24 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,34 +61,27 @@ int		readpieces(int fd, t_etris *pieces[])
 	return (count);
 }
 
-int		ispattern(char *pattern)
+int		ispattern(char *p)
 {
 	int x;
 	int n;
 
-	if (!pattern || ft_strlen(pattern) != 20 || pattern[4] != '\n'
-		|| pattern[4] != pattern[9] || pattern[9] != pattern[14])
-		return nope("ispattern: basic failure", 2, 0);
+	if (p[4] != '\n' || p[4] != '\n' || p[9] != '\n')
+		return nope("ispattern: not a shape (bad format)", 2, 0);
 	x = -1;
 	n = 0;
 	while (++x < 20)
 	{
-		if (pattern[x] == '#')
-		{
-			if (x < 20 && pattern[x] == pattern[x + 1])
-				n++;
-			if (x > 0 && pattern[x] == pattern[x - 1])
-				n++;
-			if (x + 5 <= 20 && pattern[x] == pattern[x + 5])
-				n++;
-			if (x - 5 >= 0 && pattern[x] == pattern[x - 5])
-				n++;
-		}
-		else if (pattern[x] != '.' && pattern[x] != '\n' && pattern[x] != '\0')
-		{
-			printf("isPattern: symbol: '%c' (%d)\n", pattern[x], (int)pattern[x]);
+		if (p[x] != '#' && p[x] != '.' && p[x] != '\n' && p[x] != '\0')
 			return nope("ispattern: unknown symbol", 2, 0);
-		}
+		if (p[x] == '#' && x < 20 && p[x] == p[x + 1])
+			n++;
+		if (p[x] == '#' && x > 0 && p[x] == p[x - 1])
+			n++;
+		if (p[x] == '#' && x + 5 <= 20 && p[x] == p[x + 5])
+			n++;
+		if (p[x] == '#' && x - 5 >= 0 && p[x] == p[x - 5])
+			n++;
 	}
 	if (n != 6 && n != 8)
 		return nope("ispattern: not a shape (bad connection)", 2, 0);
