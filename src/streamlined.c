@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/04 14:42:40 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/04 16:17:48 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,24 @@ int		ispattern(char *pattern)
 		return nope("ispattern: basic failure", 2, 0);
 	x = -1;
 	n = 0;
-	while (++x <= 20)
+	while (++x < 20)
 	{
-		if (pattern[x] == '#' && x < 20 && pattern[x] == pattern[x + 1])
+		if (pattern[x] == '#')
+		{
+			if (x < 20 && pattern[x] == pattern[x + 1])
 				n++;
-		if (pattern[x] == '#' && x > 0 && pattern[x] == pattern[x - 1])
-			n++;
-		if (pattern[x] == '#' && x + 5 <= 20 && pattern[x] == pattern[x + 5])
-			n++;
-		if (pattern[x] == '#' && x - 5 >= 0 && pattern[x] == pattern[x - 5])
-			n++;
-		//why does this error? we need it for testing
-		//
-		// else if (pattern[x] != '.' && pattern[x] != '\n' && pattern[x] != '\0')
-		// 	return nope("ispattern: unknown symbol", 2, 0);
+			if (x > 0 && pattern[x] == pattern[x - 1])
+				n++;
+			if (x + 5 <= 20 && pattern[x] == pattern[x + 5])
+				n++;
+			if (x - 5 >= 0 && pattern[x] == pattern[x - 5])
+				n++;
+		}
+		else if (pattern[x] != '.' && pattern[x] != '\n' && pattern[x] != '\0')
+		{
+			printf("isPattern: symbol: '%c' (%d)\n", pattern[x], (int)pattern[x]);
+			return nope("ispattern: unknown symbol", 2, 0);
+		}
 	}
 	if (n != 6 && n != 8)
 		return nope("ispattern: not a shape (bad connection)", 2, 0);
