@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/04 13:57:06 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/04 14:42:40 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,11 @@ void	ft_strrevolve(char *str, unsigned int wide, unsigned int tall)
 	row = -1;
 	while (++row < tall)
 	{
-		tmp = str[row*5];
+		tmp = str[row * wide];
 		w = -1;
 		while (++w < wide - 1)
-			str[row*5 + w] = str[row*5 + w + 1];
-		str[row*5 + wide - 1] = tmp;
+			str[row * wide + w] = str[row * wide + w + 1];
+		str[row * wide + wide - 1] = tmp;
 	}
 }
 
