@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/05/31 18:43:48 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/04 13:57:06 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,15 @@ int		main(int c, char **v)
 
 	if (c != 2)
 		return nope("usage: fillit patterns.txt", 1, 0);
+	i = 0;
+	while (i < 26)
+		pieces[i++] = NULL;
 	if ((count = readpieces(open(v[1], O_RDONLY), pieces)) == 0)
 		return nope("fillit: could not read pieces", 2, 0);
 	i = 0;
 	while (pieces[i])
 		tetprint(pieces[i++]);
- 	return (0);
+	return (0);
 }
 
 int		readpieces(int fd, t_etris *pieces[])
@@ -78,6 +81,8 @@ int		ispattern(char *pattern)
 			n++;
 		if (pattern[x] == '#' && x - 5 >= 0 && pattern[x] == pattern[x - 5])
 			n++;
+		//why does this error? we need it for testing
+		//
 		// else if (pattern[x] != '.' && pattern[x] != '\n' && pattern[x] != '\0')
 		// 	return nope("ispattern: unknown symbol", 2, 0);
 	}
@@ -89,26 +94,41 @@ int		ispattern(char *pattern)
 t_etris	*makepiece(char *pattern)
 {
 	t_etris	*out;
-	int		i;
 
+	//we don't actually need this, now sizepiece works
+	//still might speed up execution time during backtrack, can't prove it
 	while (ft_strchr(pattern, '#') - &pattern[0] >= 4)
 		ft_strshift(pattern, 5);
 	while (pattern[0] != '#' && pattern[5] != '#' && pattern[10] != '#'
 		&& pattern[15] != '#')
 		ft_strrevolve(pattern, 5, 4);
+	//end note
 	out = (t_etris*)malloc(sizeof(t_etris*));
 	out->str = ft_stripnl(pattern);
-	out->width = 0;
-	out->height = 0;
-	i = -1;
-	while (pattern[++i])
-	{
-		if (pattern[i] == '#' && i % 4 > out->width)
-			out->width = i % 4;
-		if (pattern[i] == '#' && i / 4 > out->height)
-			out->height = i / 4;
-	}
+	sizepiece(out);
 	return (out);
+}
+
+void	sizepiece(t_etris *t)
+{
+	unsigned int i;
+	unsigned int corners[4];
+
+	corners[0] = 3;
+	corners[1] = 0;
+	corners[2] = 3;
+	corners[3] = 0;
+	i = -1;
+	while (++i < 16)
+		if (t->str[i] == '#')
+		{
+			corners[0] = (i % 4 < corners[0]) ? i % 4 : corners[0];
+			corners[1] = (i % 4 > corners[1]) ? i % 4 : corners[1];
+			corners[2] = (i / 4 < corners[2]) ? i / 4 : corners[2];
+			corners[3] = (i / 4 > corners[3]) ? i / 4 : corners[3];
+		}
+	t->width = 1 + corners[1] - corners[0];
+	t->height = 1 + corners[3] - corners[2];
 }
 
 void	ft_strrevolve(char *str, unsigned int wide, unsigned int tall)
@@ -138,5 +158,5 @@ void	tetprint(t_etris *t)
 		write(1, t->str + 4 * i++, 4);
 		write(1, "\n", 1);
 	}
-	write(1, "\n", 1);
+	printf("w:%d h:%d\n", t->width, t->height);
 }
