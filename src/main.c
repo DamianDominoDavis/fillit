@@ -100,7 +100,8 @@ t_etris	*makepiece(char *pattern)
 		&& pattern[15] != '#')
 		ft_strrevolve(pattern, 5, 4);
 	//end note
-	out = (t_etris*)malloc(sizeof(t_etris*));
+	if (!(out = (t_etris*)malloc(sizeof(t_etris*))))
+		ft_putendl_fd("makepiece: cannot malloc", 2);
 	out->str = ft_stripnl(pattern);
 	sizepiece(out);
 	return (out);
@@ -124,8 +125,8 @@ void	sizepiece(t_etris *t)
 			corners[2] = (i / 4 < corners[2]) ? i / 4 : corners[2];
 			corners[3] = (i / 4 > corners[3]) ? i / 4 : corners[3];
 		}
-	t->width = 1 + corners[1] - corners[0];
-	t->height = 1 + corners[3] - corners[2];
+	t->w = 1 + corners[1] - corners[0];
+	t->h = 1 + corners[3] - corners[2];
 }
 
 void	ft_strrevolve(char *str, unsigned int wide, unsigned int tall)
@@ -155,5 +156,5 @@ void	tetprint(t_etris *t)
 		write(1, t->str + 4 * i++, 4);
 		write(1, "\n", 1);
 	}
-	printf("w:%d h:%d\n", t->width, t->height);
+	printf("w:%d h:%d\n", t->w, t->h);
 }

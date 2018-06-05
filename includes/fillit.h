@@ -19,14 +19,14 @@
 //REMOVE LATER
 # include <stdio.h>
 
-typedef struct		s_etris
+typedef struct	s_etris
 {
-	char			*str;
-	unsigned int	width;
-	unsigned int	height;
-	int				x;
-	int				y;
-}					t_etris;
+	char		*str;
+	int			w;
+	int			h;
+	int			x;
+	int			y;
+}				t_etris;
 
 int		nope(char *msg, int fd, int rvalue);
 int		main(int c, char **v);
