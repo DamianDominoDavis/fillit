@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   streamlined.c                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damiandavis <damiandavis@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/04 16:45:24 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/04 23:22:44 by damiandavis      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int		main(int c, char **v)
 
 	if (c != 2)
 		return nope("usage: fillit patterns.txt", 1, 0);
-	ft_bzero(pieces, sizeof(t_etris) * 16);
+	i = 0;
+	while (i < 26)
+		pieces[i++] = NULL;
 	if ((count = readpieces(open(v[1], O_RDONLY), pieces)) == 0)
 		return nope("fillit: could not read pieces", 2, 0);
 	i = 0;
@@ -154,21 +156,4 @@ void	tetprint(t_etris *t)
 		write(1, "\n", 1);
 	}
 	printf("w:%d h:%d\n", t->width, t->height);
-}
-
-int	solve(t_etris *tetris, const int count, unsigned short int *map)
-{
-	int size;
-
-	size = 2;	//could hold a square
-	while (size * size < count * 4) //size^2 == perfect fit
-		size++;
-	while(!solve_map(tetris, size++, map) && size <= 16)
-		ft_bzero(map, sizeof(unsigned short int) * 16);
-	return ((--size == 17) ? 0 : --size);
-}
-
-int	solve_map(t_etris tetris, const int size, unsigned short int *map)
-{
-
 }
