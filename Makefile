@@ -12,7 +12,7 @@
 
 NAME = fillit
 
-SRC = ft_countch.c ft_stripch.c ft_stripnl.c streamlined.c ft_strshift.c
+SRC = ft_countch.c ft_stripch.c ft_stripnl.c main.c ft_strshift.c
 
 OBJ = $(SRC:.c=.o)
 
