@@ -10,5 +10,5 @@ Some of the usual rules, `all`, `clean`, `fclean`, and `re`. Note that `clean` a
 - `libsync`: delete **libft**, clone from repo defined in *Makefile*'s `$(LSRC)` (cbrill's, by default)
 - `libclean`: **libft**'s `clean`, if possible.
 - `libfclean`: **libft**'s `fclean`, if possible.
-- `just`: convenience `make re && make clean` for a tidy rebuild.
-- `do`: convenience `just` and immediately execute with ?target?, to quickly demo **fillit**.
+- `just`: a tidy rebuild convenience for `make re && make clean`.
+- `do`: a quickly demo convenience for `make just && ./fillit $(TARGET)`, with *Makefile*'s `$(TARGET)` (provided *tet.txt*, by default)
