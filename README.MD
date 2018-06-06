@@ -1,13 +1,6 @@
 fillit
-=======
-get_next_line
 ===
-
-Subject
----
 **fillit** reads and assembles tetronimo pieces into the smallest available square. Its complete requirements and restrictions are described in the 42 [subject PDF](https://github.com/DamianDominoDavis/fillit/blob/master/fillit.en.pdf).
-=======
-**get_next_line** reads from a file up to a newline character or EOF and writes it into a return buffer. Its complete requirements and restrictions are described in the 42 [subject PDF](/blob/master/get_next_line.en.pdf).
 
 Make
 ---
