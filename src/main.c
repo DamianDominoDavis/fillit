@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/07 15:49:32 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/07 16:03:06 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int		readpieces(int fd, t_etris *pieces[])
 		if (rcount == 1 && candidate[0] != '\n')
 			return nope("readpieces: file format error", 2, 0);
 	}
-	if (rcount != 0 || (rcount == 1 && candidate[0] == '\n'))
+	//this is two fewer lines; when we suppress error messages, delete this nope
+	//return (rcount == 0 ? count : 0);
+	if (rcount != 0)
 		return nope("readpieces: incomplete pattern (trailing newline?)", 2, 0);
 	return (count);
 }
