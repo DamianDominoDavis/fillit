@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damiandavis <damiandavis@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/04 23:22:44 by damiandavis      ###   ########.fr       */
+/*   Updated: 2018/06/07 15:30:28 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int		readpieces(int fd, t_etris *pieces[])
 		if (rcount == 1 && candidate[0] != '\n')
 			return nope("readpieces: file format error", 2, 0);
 	}
+	if (rcount != 0 || (rcount == 1 && candidate[0] == '\n'))
+		return nope("readpieces: incomplete pattern (trailing newline?)", 2, 0);
 	return (count);
 }
 
