@@ -6,7 +6,7 @@
 #    By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/05 16:54:43 by cbrill            #+#    #+#              #
-#    Updated: 2018/06/05 20:01:07 by cbrill           ###   ########.fr        #
+#    Updated: 2018/06/06 17:08:18 by cbrill           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ LIBFT =	src/libft/libft.a
 LPATH = src/libft
 
 LSRC = http://github.com/DamianDominoDavis/libft
+
+TARGET = tet.txt
 
 CC = gcc
 
