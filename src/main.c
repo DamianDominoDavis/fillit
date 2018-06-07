@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/07 15:30:28 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/07 15:49:32 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		readpieces(int fd, t_etris *pieces[])
 	count = 0;
 	if (fd < 0)
 		return nope("readpieces: couldn't read file.", 2, 0);
-	while ((rcount = read(fd, candidate, 20)) == 20)
+	while (count <= 26 && (rcount = read(fd, candidate, 20)) == 20)
 	{
 		if (ispattern(candidate))
 				pieces[count++] = makepiece(candidate);
