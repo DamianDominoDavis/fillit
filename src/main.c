@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/07 16:17:59 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/07 16:54:14 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		readpieces(int fd, t_etris *pieces[])
 		if (rcount == 1 && candidate[0] != '\n')
 			return nope("readpieces: file format error", 2, 0);
 	}
-	return ((rcount != 0) ? count : nope("readpieces: unexpected EoF", 2, 0));
+	return ((rcount == 0) ? count : nope("readpieces: unexpected EoF", 2, 0));
 }
 
 int		ispattern(char *p)

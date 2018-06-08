@@ -6,11 +6,11 @@
 #    By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/05 16:54:43 by cbrill            #+#    #+#              #
-#    Updated: 2018/06/06 17:08:18 by cbrill           ###   ########.fr        #
+#    Updated: 2018/06/07 16:53:01 by cbrill           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = get_next_line
+NAME = fillit
 
 SRC = ft_countch.c ft_stripch.c ft_stripnl.c main.c ft_strshift.c
 
