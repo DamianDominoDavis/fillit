@@ -6,13 +6,13 @@
 #    By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/05 16:54:43 by cbrill            #+#    #+#              #
-#    Updated: 2018/06/07 18:01:18 by cbrill           ###   ########.fr        #
+#    Updated: 2018/06/08 03:26:10 by cbrill           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
-SRC = ft_countch.c ft_stripch.c ft_stripnl.c main.c ft_strshift.c
+SRC = ft_countch.c ft_stripch.c ft_strshift.c main.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/07 16:54:14 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/08 04:24:31 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 int		nope(char *msg, int fd, int rvalue)
 {
-	write(fd, msg, ft_strlen(msg));
-	write(fd, "\n", 1);
+	ft_putendl_fd(msg, fd);
 	return (rvalue);
 }
 
 int		main(int c, char **v)
 {
-	int		count;
 	t_etris	*pieces[26];
 	int		i;
+	char	**board;
 
 	if (c != 2)
 		return nope("usage: fillit patterns.txt", 1, 0);
-	i = 0;
-	while (i < 26)
-		pieces[i++] = NULL;
-	if ((count = readpieces(open(v[1], O_RDONLY), pieces)) == 0)
+	i = -1;
+	while (++i < 26)
+	{
+		if (!(pieces[i] = (t_etris*)ft_memalloc(sizeof(t_etris*))))
+			return nope("main: OOM", 2, 0);
+		pieces[i]->str = NULL;
+	}
+	if ((readpieces(open(v[1], O_RDONLY), pieces)) == 0)
 		return nope("fillit: could not read pieces", 2, 0);
-	i = 0;
-	while (pieces[i])
-		tetprint(pieces[i++]);
+	board = solve(pieces);
+	printboard(board);
 	return (0);
 }
 
@@ -92,17 +94,14 @@ t_etris	*makepiece(char *pattern)
 {
 	t_etris	*out;
 
-	//we don't actually need this, now sizepiece works
-	//still might speed up execution time during backtrack, can't prove it
 	while (ft_strchr(pattern, '#') - &pattern[0] >= 4)
 		ft_strshift(pattern, 5);
 	while (pattern[0] != '#' && pattern[5] != '#' && pattern[10] != '#'
 		&& pattern[15] != '#')
 		ft_strrevolve(pattern, 5, 4);
-	//end note
-	if (!(out = (t_etris*)malloc(sizeof(t_etris*))))
-		ft_putendl_fd("makepiece: cannot malloc", 2);
-	out->str = ft_stripnl(pattern);
+	if (!(out = (t_etris*)ft_memalloc(sizeof(t_etris*))))
+		ft_putendl_fd("makepiece: OOM", 2);
+	out->str = ft_stripch(pattern, ft_strlen(pattern), '\n');
 	sizepiece(out);
 	return (out);
 }
@@ -157,4 +156,163 @@ void	tetprint(t_etris *t)
 		write(1, "\n", 1);
 	}
 	printf("w:%d h:%d\n", t->w, t->h);
+}
+
+char	**solve(t_etris *pieces[])
+{
+	char	**board;
+	int		size;
+	int		count;
+
+	ft_putendl("solve");
+	count = 0;
+	while (pieces[count]->str)
+		count++;
+	size = 2;
+	while (size * size < count * 4)
+		size++;
+	board = makeboard(size);
+	while (!solveboard(board, pieces, 0))
+	{
+		unmakeboard(board);
+		board = makeboard(++size);
+	}
+	return (board);
+}
+
+char	**makeboard(int size)
+{
+	char	**board;
+	int		i;
+	int		j;
+
+	board = (char **)ft_memalloc(sizeof(char *) * size);
+	i = 0;
+	while (i < size)
+	{
+		board[i] = ft_strnew(size);
+		j = 0;
+		while (j < size)
+		{
+			board[i][j] = '.';
+			j++;
+		}
+		i++;
+	}
+	return (board);
+}
+
+void	unmakeboard(char **board)
+{
+	int i;
+	int size;
+
+	size = ft_strlen(board[0]);
+	i = 0;
+	while (i < size)
+	{
+		ft_memdel((void **)&(board[i]));
+		i++;
+	}
+	ft_memdel((void **)&(board));
+	ft_memdel((void **)&board);
+}
+
+int		solveboard(char **board, t_etris *pieces[], int i)
+{
+	int			x;
+	int			y;
+	int			size;
+
+	if (pieces[i] == NULL)
+		return (1);
+	size = ft_strlen(board[0]);
+	y = -1;
+	while (++y < size - pieces[i]->h + 1)
+	{
+		x = -1;
+		while (++x < size - pieces[i]->w + 1)
+		{
+			printf("i%d x%d y%d\n", i, x, y);
+			if (canplace(pieces[i], board, x, y))
+			{
+				replace(pieces[i], board, x, y);
+				if (solveboard(board, pieces, i + 1))
+					return (1);
+				else
+					replace(pieces[i], board, x, y);
+			}
+		}
+	}
+	return (0);
+}
+
+int		canplace(t_etris *t, char **board, int x, int y)
+{
+	int i;
+	int j;
+
+	//ft_putendl("canplace");
+	i = -1;
+	while (++i < t->w)
+	{
+		j = -1;
+		while (++j < t->h)
+			if (t->str[t->w * i + j] == '#' && board[y + j][x + i] != '.')
+				return (0);
+	}
+	return (1);
+}
+
+void	replace(t_etris *t, char **board, int x, int y)
+{
+	int i;
+	int j;
+
+	//ft_putendl("replace");
+	i = -1;
+	while (++i < t->w)
+	{
+		j = -1;
+		while (++j < t->h)
+			if (t->str[t->w * i + j] == '#')
+				board[y + j][x + i] = board[y + j][x + i] == '.' ? '#' : '.';
+	}
+}
+
+void	set_piece(t_etris *t, char **board, int x, int y)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < t->w)
+	{
+		j = 0;
+		while (j < t->h)
+		{
+			if (t->str[t->w * i + j] == '#')
+				board[y + j][x + i] = board[y + j][x + i] == '.' ? '#' : '.';
+			j++;
+		}
+		i++;
+	}
+}
+
+void	free_tetris(t_etris *t)
+{
+	ft_putendl("free_tetris");
+	ft_strdel(&t->str);
+	ft_memdel((void **)&t);
+}
+
+void	printboard(char **board)
+{
+	int i;
+	int size;
+
+	size = ft_strlen(board[0]);
+	i = -1;
+	while (++i < size)
+		ft_putendl(board[i]);
 }
