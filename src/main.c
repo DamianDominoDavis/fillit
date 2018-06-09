@@ -257,14 +257,18 @@ int		canplace(t_etris *t, char **board, int x, int y)
 {
 	int i;
 	int j;
+	int size;
 
+	size = ft_strlen(board[0]);
 	//ft_putendl("canplace");
+	if (!(x + t->w < size && y + t->h < size))
+		return (0);
 	i = -1;
-	while (++i < t->w)
+	while (++i < t->h)
 	{
 		j = -1;
-		while (++j < t->h)
-			if (t->str[t->w * i + j] == '#' && board[y + j][x + i] != '.')
+		while (++j < t->w)
+			if (t->str[t->w * i + j] == '#' && board[y + i][x + j] != '.')
 				return (0);
 	}
 	return (1);
@@ -277,12 +281,12 @@ void	replace(t_etris *t, char **board, int x, int y)
 
 	//ft_putendl("replace");
 	i = -1;
-	while (++i < t->w)
+	while (++i < t->h)
 	{
 		j = -1;
-		while (++j < t->h)
+		while (++j < t->w)
 			if (t->str[t->w * i + j] == '#')
-				board[y + j][x + i] = board[y + j][x + i] == '.' ? '#' : '.';
+				board[y + i][x + j] = board[y + i][x + j] == '.' ? '#' : '.';
 	}
 }
 
@@ -292,13 +296,13 @@ void	set_piece(t_etris *t, char **board, int x, int y)
 	int j;
 
 	i = 0;
-	while (i < t->w)
+	while (i < t->h)
 	{
 		j = 0;
-		while (j < t->h)
+		while (j < t->w)
 		{
 			if (t->str[t->w * i + j] == '#')
-				board[y + j][x + i] = board[y + j][x + i] == '.' ? '#' : '.';
+				board[y + i][x + j] = board[y + i][x + j] == '.' ? '#' : '.';
 			j++;
 		}
 		i++;
