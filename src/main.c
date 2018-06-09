@@ -20,14 +20,14 @@ int		nope(char *msg, int fd, int rvalue)
 
 int		main(int c, char **v)
 {
-	t_etris	*pieces[26];
+	t_etris	*pieces[27];
 	int		i;
 	char	**board;
 
 	if (c != 2)
 		return nope("usage: fillit patterns.txt", 1, 0);
 	i = -1;
-	while (++i < 26)
+	while (++i < 27)
 	{
 		if (!(pieces[i] = (t_etris*)ft_memalloc(sizeof(t_etris*))))
 			return nope("main: OOM", 2, 0);
@@ -224,7 +224,7 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 	int			y;
 	int			size;
 
-	if (pieces[i] == NULL)
+	if (pieces[i] == NULL || pieces[i]->str == NULL)
 		return (1);
 	size = ft_strlen(board[0]);
 	y = -1;
