@@ -66,27 +66,33 @@ int		readpieces(int fd, t_etris *pieces[])
 int		ispattern(char *p)
 {
 	int x;
-	int n;
+	int c;
+    int h;
 
 	if (p[4] != '\n' || p[4] != '\n' || p[9] != '\n')
 		return nope("ispattern: not a shape (bad format)", 2, 0);
 	x = -1;
-	n = 0;
+	c = 0;
+    h = 0;
 	while (++x < 20)
 	{
 		if (p[x] != '#' && p[x] != '.' && p[x] != '\n' && p[x] != '\0')
 			return nope("ispattern: unknown symbol", 2, 0);
-		if (p[x] == '#' && x < 20 && p[x] == p[x + 1])
-			n++;
-		if (p[x] == '#' && x > 0 && p[x] == p[x - 1])
-			n++;
-		if (p[x] == '#' && x + 5 <= 20 && p[x] == p[x + 5])
-			n++;
-		if (p[x] == '#' && x - 5 >= 0 && p[x] == p[x - 5])
-			n++;
+		if (p[x] == '#')
+        {
+            h++;
+            if (x < 20 && p[x] == p[x + 1])
+                c++;
+            if (x > 0 && p[x] == p[x - 1])
+                c++;
+            if (x + 5 <= 20 && p[x] == p[x + 5])
+                c++;
+            if (x - 5 >= 0 && p[x] == p[x - 5])
+                c++;
+        }
 	}
-	if (n != 6 && n != 8)
-		return nope("ispattern: not a shape (bad connection)", 2, 0);
+	if (!(c == 6 || c == 8) || !(h == 4))
+		return nope("ispattern: not a shape", 2, 0);
 	return (1);
 }
 
