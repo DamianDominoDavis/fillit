@@ -116,15 +116,19 @@ void	sizepiece(t_etris *t)
 {
 	unsigned int i;
 	unsigned int corners[4];
+	int k;
 
 	corners[0] = 3;
 	corners[1] = 0;
 	corners[2] = 3;
 	corners[3] = 0;
 	i = -1;
+	k = 0;
 	while (++i < 16)
 		if (t->str[i] == '#')
 		{
+			t->x[k] = i % 4;
+			t->y[k++] = i / 4;
 			corners[0] = (i % 4 < corners[0]) ? i % 4 : corners[0];
 			corners[1] = (i % 4 > corners[1]) ? i % 4 : corners[1];
 			corners[2] = (i / 4 < corners[2]) ? i / 4 : corners[2];
@@ -174,6 +178,7 @@ char	**solve(t_etris *pieces[])
 	count = 0;
 	while (pieces[count]->str)
 		count++;
+	printf("%d\n", count);
 	size = 2;
 	while (size * size < count * 4)
 		size++;
@@ -256,38 +261,38 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 int		canplace(t_etris *t, char **board, int x, int y)
 {
 	int i;
-	int j;
+	// int j;
 	int size;
 
 	size = ft_strlen(board[0]);
 	//ft_putendl("canplace");
-	if (!(x + t->w < size && y + t->h < size))
+	// if (!(x < size - t->w + 1 && y < size - t->h + 1))
+	// 	return (0);
+	// i = -1;
+	// while (++i < t->h)
+	// {
+	// 	j = -1;
+	// 	while (++j < t->w)
+	// 		if (t->str[t->w * i + j] == '#' && board[y + i][x + j] != '.')
+	// 			return (0);
+	// }
+	if (!(x < size - t->w + 1 && y < size - t->h + 1))
 		return (0);
 	i = -1;
-	while (++i < t->h)
-	{
-		j = -1;
-		while (++j < t->w)
-			if (t->str[t->w * i + j] == '#' && board[y + i][x + j] != '.')
-				return (0);
-	}
+	while (++i)
+		if (board[y + t->y[i]][x + t->x[i]] != '.')
+			return (0);
 	return (1);
 }
 
 void	replace(t_etris *t, char **board, int x, int y)
 {
 	int i;
-	int j;
 
 	//ft_putendl("replace");
 	i = -1;
-	while (++i < t->h)
-	{
-		j = -1;
-		while (++j < t->w)
-			if (t->str[t->w * i + j] == '#')
-				board[y + i][x + j] = board[y + i][x + j] == '.' ? '#' : '.';
-	}
+	while (++i < 4)
+		board[y + t->y[i/4]][x + t->x[i%4]] = board[y + t->y[i/4]][x + t->x[i%/4]] == '.' ? '#' : '.';
 }
 
 void	set_piece(t_etris *t, char **board, int x, int y)
@@ -296,13 +301,13 @@ void	set_piece(t_etris *t, char **board, int x, int y)
 	int j;
 
 	i = 0;
-	while (i < t->h)
+	while (i < t->w)
 	{
 		j = 0;
-		while (j < t->w)
+		while (j < t->h)
 		{
-			if (t->str[t->w * i + j] == '#')
-				board[y + i][x + j] = board[y + i][x + j] == '.' ? '#' : '.';
+			if (t->str[t->w * j + i] == '#')
+				board[y + j][x + i] = (board[y + j][x + i] == '.') ? '#' : '.' ;
 			j++;
 		}
 		i++;

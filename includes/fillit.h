@@ -24,6 +24,8 @@ typedef struct	s_etris
 	char		*str;
 	int			w;
 	int			h;
+	int			x[4];
+	int			y[4];
 }				t_etris;
 
 int		nope(char *msg, int fd, int rvalue);
