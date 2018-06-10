@@ -57,7 +57,9 @@ int		readpieces(int fd, t_etris *pieces[])
 	while (count <= 26 && (rcount = read(fd, candidate, 20)) == 20)
 	{
 		if (ispattern(candidate))
-				pieces[count++] = makepiece(candidate);
+		{
+			pieces[count++] = makepiece(candidate);
+		}
 		else
 			return nope("readpieces: pattern format error", 2, 0);
 		rcount = read(fd, candidate, 1);
@@ -112,6 +114,7 @@ t_etris	*makepiece(char *pattern)
 	if (!(out = (t_etris*)ft_memalloc(sizeof(t_etris*))))
 		ft_putendl_fd("makepiece: OOM", 2);
 	out->str = ft_stripch(pattern, ft_strlen(pattern), '\n');
+	printf("%s\n", out->str);
 	sizepiece(out);
 	return (out);
 }
@@ -122,7 +125,6 @@ void	sizepiece(t_etris *t)
 	int corners[4];
 	int k;
 
-	printf("%s\n", t->str);
 	corners[0] = 3;
 	corners[1] = 0;
 	corners[2] = 3;
@@ -135,6 +137,7 @@ void	sizepiece(t_etris *t)
 	}
 	i = -1;
 	k = 0;
+	//printf("%s\n", t->str);
 	while (++i < 16)
 		if (t->str[i] == '#')
 		{
