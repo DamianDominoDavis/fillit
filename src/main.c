@@ -122,10 +122,17 @@ void	sizepiece(t_etris *t)
 	int corners[4];
 	int k;
 
+	printf("%s\n", t->str);
 	corners[0] = 3;
 	corners[1] = 0;
 	corners[2] = 3;
 	corners[3] = 0;
+	i = -1;
+	while (++i < 4)
+	{
+		t->x[i] = 0;
+		t->y[i] = 0;
+	}
 	i = -1;
 	k = 0;
 	while (++i < 16)
@@ -164,12 +171,7 @@ void	tetprint(t_etris *t)
 {
 	int i;
 
-	i = 0;
-	while (t->str && i < 4)
-	{
-		write(1, t->str + 4 * i++, 4);
-		write(1, "\n", 1);
-	}
+	printf("%s\n", t->str);
 	printf("w:%d h:%d\n", t->w, t->h);
 	i = -1;
 	while (++i < 4)
