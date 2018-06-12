@@ -35,11 +35,10 @@ int		main(int c, char **v)
 	}
 	if ((readpieces(open(v[1], O_RDONLY), pieces)) == 0)
 		return nope("fillit: could not read pieces", 2, 0);
-	i = -1;
-	while (pieces[++i]->str)
-		tetprint(pieces[i]);
+	// i = -1;
+	// while (pieces[++i]->str)
+	// 	tetprint(pieces[i]);
 	board = solve(pieces);
-	ft_putendl("\n\n");
 	printboard(board);
 	return (0);
 }
@@ -57,9 +56,7 @@ int		readpieces(int fd, t_etris *pieces[])
 	while (count <= 26 && (rcount = read(fd, candidate, 20)) == 20)
 	{
 		if (ispattern(candidate))
-		{
 			pieces[count++] = makepiece(candidate);
-		}
 		else
 			return nope("readpieces: pattern format error", 2, 0);
 		rcount = read(fd, candidate, 1);
@@ -254,7 +251,6 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 	{
 		x = -1;
 		while (++x < size - pieces[i]->w + 1)
-		{
 			if (canplace(pieces[i], board, x, y))
 			{
 				replace(pieces[i], board, x, y);
@@ -263,7 +259,6 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 				else
 					replace(pieces[i], board, x, y);
 			}
-		}
 	}
 	return (0);
 }
@@ -276,7 +271,7 @@ int		canplace(t_etris *t, char **board, int x, int y)
 	//ft_putendl("canplace");
 	size = ft_strlen(board[0]);
 	i = -1;
-	while (++i)
+	while (++i < 4)
 		if (x + t->x[i] < size && y + t->y[i] < size && board[y + t->y[i]][x + t->x[i]] != '.')
 			return (0);
 	return (1);
