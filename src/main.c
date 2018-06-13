@@ -256,13 +256,13 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 			printf("t[%d]@(%d,%d)?", i, x, y);
 			if (canplace(pieces[i], board, x, y))
 			{
-				replace(pieces[i], board, x, y);
+				place(pieces[i], board, x, y);
 				printf(" yes\n");
 				if (solveboard(board, pieces, i + 1))
 					return (1);
 				else
 				{
-					replace(pieces[i], board, x, y);
+					unplace(pieces[i], board, x, y);
 					printf("unplaced t[%d]@(%d,%d)\n", i, x, y);
 				}
 			}
@@ -282,7 +282,7 @@ int		canplace(t_etris *t, char **board, int x, int y)
 	size = ft_strlen(board[0]);
 	i = -1;
 	while (++i < 4)
-		if (x + t->x[i] > size || y + t->y[i] > size || board[y + t->y[i]][x + t->x[i]] != '.')
+		if (x + t->x[i] >= size || y + t->y[i] >= size || board[y + t->y[i]][x + t->x[i]] != '.')
 			return (0);
 	return (1);
 }
@@ -296,6 +296,34 @@ void	replace(t_etris *t, char **board, int x, int y)
 	while (++i < 4)
 	{
 		board[y + t->y[i]][x + t->x[i]] = board[y + t->y[i]][x + t->x[i]] == '.' ? '#' : '.';
+	}
+}
+
+void	place(t_etris *t, char **board, int x, int y)
+{
+	int i;
+
+	//ft_putendl("place");
+	i = -1;
+	while (++i < 4)
+	{
+		if (board[y + t->y[i]][x + t->x[i]] == '#')
+			printf("place is overwriting existing pieces\n");
+		board[y + t->y[i]][x + t->x[i]] = '#';
+	}
+}
+
+void	unplace(t_etris *t, char **board, int x, int y)
+{
+	int i;
+
+	//ft_putendl("unplace");
+	i = -1;
+	while (++i < 4)
+	{
+		if (board[y + t->y[i]][x + t->x[i]] == '.')
+			printf("unplace is clearing empty board pos\n");
+		board[y + t->y[i]][x + t->x[i]] = '.';
 	}
 }
 

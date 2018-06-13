@@ -41,6 +41,8 @@ void	unmakeboard(char **board);
 int		solveboard(char **board, t_etris *pieces[], int i);
 int		canplace(t_etris *t, char **board, int x, int y);
 void	replace(t_etris *t, char **map, int x, int y);
+void	place(t_etris *t, char **map, int x, int y);
+void	unplace(t_etris *t, char **map, int x, int y);
 void	free_tetris(t_etris *tetri);
 int		ft_countch(const char *str, const unsigned char ch);
 char	*ft_stripch(const char *str, unsigned int n, const unsigned char ch);
