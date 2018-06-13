@@ -38,6 +38,7 @@ int		main(int c, char **v)
 	// i = -1;
 	// while (pieces[++i]->str)
 	// 	tetprint(pieces[i]);
+	// (void)board;
 	board = solve(pieces);
 	printboard(board);
 	return (0);
@@ -247,18 +248,27 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 		return (1);
 	size = ft_strlen(board[0]);
 	y = -1;
-	while (++y < size - pieces[i]->h + 1)
+	while (++y < size - pieces[i]->h)
 	{
 		x = -1;
-		while (++x < size - pieces[i]->w + 1)
+		while (++x < size - pieces[i]->w)
+		{
+			printf("t[%d]@(%d,%d)?", i, x, y);
 			if (canplace(pieces[i], board, x, y))
 			{
 				replace(pieces[i], board, x, y);
+				printf(" yes\n");
 				if (solveboard(board, pieces, i + 1))
 					return (1);
 				else
+				{
 					replace(pieces[i], board, x, y);
+					printf("unplaced t[%d]@(%d,%d)\n", i, x, y);
+				}
 			}
+			else
+				printf(" no\n");
+		}
 	}
 	return (0);
 }
@@ -272,7 +282,7 @@ int		canplace(t_etris *t, char **board, int x, int y)
 	size = ft_strlen(board[0]);
 	i = -1;
 	while (++i < 4)
-		if (x + t->x[i] < size && y + t->y[i] < size && board[y + t->y[i]][x + t->x[i]] != '.')
+		if (x + t->x[i] > size || y + t->y[i] > size || board[y + t->y[i]][x + t->x[i]] != '.')
 			return (0);
 	return (1);
 }
