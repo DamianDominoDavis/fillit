@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/13 22:27:09 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/13 22:32:57 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,7 +311,7 @@ int		canplace(t_etris *t, char **board, int x, int y)
 	int size;
 
 	//printf("canplace");
-	if (t->id == 'A')
+	if (t->id == 'A' && x == 0 && y == 0)
 		return (1);
 	size = ft_strlen(board[0]);
 	i = -1;
