@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damiandavis <damiandavis@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/13 14:05:57 by damiandavis      ###   ########.fr       */
+/*   Updated: 2018/06/13 22:27:09 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,32 @@ int		nope(char *msg, int fd, int rvalue)
 	return (rvalue);
 }
 
+void	debug(char *msg, int nl)
+{
+	int SILENT;
+
+	SILENT = 0;
+	if (!SILENT)
+	{
+		ft_putstr(msg);
+		if (nl)
+			ft_putstr("\n");
+		else
+			ft_putstr(" ");
+	}
+}
+
 int		main(int c, char **v)
 {
 	t_etris	*pieces[27];
 	int		i;
 	char	**board;
 
+	debug("main: starts\0", 1);
+	debug("main: argstest?\0", 0);
 	if (c != 2)
 		return nope("usage: fillit patterns.txt", 1, 0);
+	debug("yes.\nmain: alloc t_etris...\0", 1);
 	i = -1;
 	while (++i < 27)
 	{
@@ -33,12 +51,15 @@ int		main(int c, char **v)
 			return nope("main: OOM", 2, 0);
 		pieces[i]->str = NULL;
 	}
+	debug("main:...alloc tetris done.\nmain: calling readpieces...\0", 1);
 	if ((readpieces(open(v[1], O_RDONLY), pieces)) == 0)
 		return nope("fillit: could not read pieces", 2, 0);
+	debug("main:...calling readpieces done.\0", 1);
 	// i = -1;
 	// while (pieces[++i]->str)
 	// 	tetprint(pieces[i]);
 	// (void)board;
+	debug("main: calling solve...\0", 1);
 	board = solve(pieces);
 	printboard(board);
 	return (0);
@@ -58,9 +79,8 @@ int		readpieces(int fd, t_etris *pieces[])
 	{
 		if (ispattern(candidate))
 		{
-			printf("bloop");
-			makepiece(candidate, pieces[count++]);
-			printf("blip");
+			makepiece(candidate, pieces[count], count);
+			count++;
 		}
 		else
 			return nope("readpieces: pattern format error", 2, 0);
@@ -104,21 +124,20 @@ int		ispattern(char *p)
 	return (1);
 }
 
-void	makepiece(char *pattern, t_etris *t)
+void	makepiece(char *pattern, t_etris *t, char id)
 {
 	//t_etris	*out;
 
 	while (ft_strchr(pattern, '#') - &pattern[0] >= 4)
 		ft_strshift(pattern, 5);
-	printf("a");
 	while (pattern[0] != '#' && pattern[5] != '#' && pattern[10] != '#'
 		&& pattern[15] != '#')
 		ft_strrevolve(pattern, 5, 4);
-	printf("b");
 	//if (!(out = (t_etris*)ft_memalloc(sizeof(t_etris*))))
 	//	ft_putendl_fd("makepiece: OOM", 2);
 	t->str = ft_strdup(ft_stripch(pattern, ft_strlen(pattern), '\n'));
 	sizepiece(t);
+	t->id = 'A' + id;
 	//return (out);
 }
 
@@ -194,33 +213,33 @@ char	**solve(t_etris *pieces[])
 	count = 0;
 	while (pieces[count]->str)
 		count++;
-	size = 26;
+	printf("solve: count=%i\n", count);
+	size = 2;
 	while (size * size < count * 4)
 		size++;
-	board = makeboard(size);
+	board = makeboard(NULL, size);
+	printf("solve: starting board size=%i\n", size);
 	while (!solveboard(board, pieces, 0))
-	{
-		unmakeboard(board);
-		board = makeboard(++size);
-	}
+		resizeboard(board, ++size);
 	return (board);
 }
 
-char	**makeboard(int size)
+char	**makeboard(char **board, int size)
 {
-	char	**board;
 	int		i;
 	int		j;
+	int		maxp;
 
-	board = (char **)ft_memalloc(sizeof(char *) * size);
+	maxp = 100;
+	board = (char **)ft_memalloc(sizeof(char *) * (maxp + 1));
 	i = 0;
-	while (i < size)
+	while (i <= maxp)
 	{
-		board[i] = ft_strnew(size);
+		board[i] = ft_strnew(maxp);
 		j = 0;
-		while (j < size)
+		while (j < maxp)
 		{
-			board[i][j] = '.';
+			board[i][j] = (i < size && j < size) ? '.' : '\0';
 			j++;
 		}
 		i++;
@@ -228,20 +247,23 @@ char	**makeboard(int size)
 	return (board);
 }
 
-void	unmakeboard(char **board)
+void	resizeboard(char **board, int size)
 {
-	int i;
-	int size;
+	int x;
+	int y;
+	int maxp;
 
-	size = ft_strlen(board[0]);
-	i = 0;
-	while (i < size)
+	maxp = 100;
+	y = -1;
+	while (++y < maxp)
 	{
-		ft_memdel((void **)&(board[i]));
-		i++;
+		x = -1;
+		while (++x < maxp)
+		{
+			board[y][x] = (y < size && x < size) ? '.' : '\0';
+		}
 	}
-	ft_memdel((void **)&(board));
-//	ft_memdel((void **)&board);
+	debug("made the board bigger\0", 1);
 }
 
 int		solveboard(char **board, t_etris *pieces[], int i)
@@ -250,33 +272,36 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 	int			y;
 	int			size;
 
+	printboard(board);
 	if (pieces[i] == NULL || pieces[i]->str == NULL)
 		return (1);
 	size = ft_strlen(board[0]);
+	printf("solveboard: size=%d\n", size);
 	y = -1;
-	while (++y < size - pieces[i]->h  + 1)
+	while (++y < size - pieces[i]->h + 1)
 	{
 		x = -1;
 		while (++x < size - pieces[i]->w + 1)
 		{
-			printf("t[%d]@(%d,%d)?", i, x, y);
+			printf("t[%d]<%d,%d>@(%d,%d)?", i, pieces[i]->w, pieces[i]->h, x, y);
 			if (canplace(pieces[i], board, x, y))
 			{
-			  printf("after canplace\n");
-				place(pieces[i], board, x, y);
+			  	place(pieces[i], board, x, y);
 				printf(" yes\n");
 				if (solveboard(board, pieces, i + 1))
 					return (1);
 				else
 				{
 					unplace(pieces[i], board, x, y);
-					printf("unplaced t[%d]@(%d,%d)\n", i, x, y);
+					printf("unplaced t[%d]<%d,%d>@(%d,%d)\n", i, pieces[i]->w, pieces[i]->h, x + pieces[i]->w, y + pieces[i]->h);
 				}
 			}
 			else
 				printf(" no\n");
 		}
+		printf("solveboard: t[%d] doesn't fit on row %d\n", i, y);
 	}
+	printf("solveboard: t[%d] doesn't fit on board size%d\n", i, size);
 	return (0);
 }
 
@@ -285,21 +310,37 @@ int		canplace(t_etris *t, char **board, int x, int y)
 	int i;
 	int size;
 
-	printf("canplace");
+	//printf("canplace");
+	if (t->id == 'A')
+		return (1);
 	size = ft_strlen(board[0]);
 	i = -1;
 	while (++i < 4)
-		if (x + t->x[i] >= size || y + t->y[i] >= size || board[y + t->y[i]][x + t->x[i]] != '.')
+		if (x + t->x[i] >= size || y + t->y[i] >= size
+			|| board[y + t->y[i]][x + t->x[i]] != '.'
+			|| (!hasneighbor(board, x, y)))
 			return (0);
-	printf("!!!!!!!!!!!!!!!!\n");
 	return (1);
+}
+
+int		hasneighbor(char **board, int x, int y)
+{
+	int size;
+
+	size = ft_strlen(board[0]);
+	if ((x + 1 < size && board[y][x + 1] != '.')
+		|| (x - 1 >= 0 && board[y][x - 1] != '.')
+		|| (y + 1 < size && board[y + 1][x] != '.')
+		|| (y - 1 >= 0 && board[y - 1][x] != '.'))
+		return (1);
+	return (0);
 }
 
 void	replace(t_etris *t, char **board, int x, int y)
 {
 	int i;
 
-	printf("replace");
+	//printf("replace");
 	i = -1;
 	while (++i < 4)
 	{
@@ -315,9 +356,9 @@ void	place(t_etris *t, char **board, int x, int y)
 	i = -1;
 	while (++i < 4)
 	{
-		if (board[y + t->y[i]][x + t->x[i]] == '#')
+		if (board[y + t->y[i]][x + t->x[i]] != '.')
 			printf("place is overwriting existing pieces\n");
-		board[y + t->y[i]][x + t->x[i]] = '#';
+		board[y + t->y[i]][x + t->x[i]] = t->id;
 	}
 }
 

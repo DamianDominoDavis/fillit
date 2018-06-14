@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damiandavis <damiandavis@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:39:39 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/13 13:48:03 by damiandavis      ###   ########.fr       */
+/*   Updated: 2018/06/13 22:24:13 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,22 @@ typedef struct	s_etris
 	int			h;
 	int			x[4];
 	int			y[4];
+	char		id;
 }				t_etris;
 
 int		nope(char *msg, int fd, int rvalue);
 int		readpieces(int fd, t_etris *pieces[]);
 int		ispattern(char *p);
-void	makepiece(char *pattern, t_etris *t);
+void	makepiece(char *pattern, t_etris *t, char id);
 void	sizepiece(t_etris *t);
 void	ft_strrevolve(char *str, unsigned int wide, unsigned int tall);
 void	tetprint(t_etris *t);
 char	**solve(t_etris *pieces[]);
-char	**makeboard(int size);
-void	unmakeboard(char **board);
+char	**makeboard(char **board, int size);
+void	resizeboard(char **board, int size);
 int		solveboard(char **board, t_etris *pieces[], int i);
 int		canplace(t_etris *t, char **board, int x, int y);
+int		hasneighbor(char **board, int x, int y);
 void	replace(t_etris *t, char **map, int x, int y);
 void	place(t_etris *t, char **map, int x, int y);
 void	unplace(t_etris *t, char **map, int x, int y);
