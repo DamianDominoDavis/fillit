@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damiandavis <damiandavis@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:39:39 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/08 04:06:42 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/13 13:48:03 by damiandavis      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_etris
 int		nope(char *msg, int fd, int rvalue);
 int		readpieces(int fd, t_etris *pieces[]);
 int		ispattern(char *p);
-t_etris	*makepiece(char *pattern);
+void	makepiece(char *pattern, t_etris *t);
 void	sizepiece(t_etris *t);
 void	ft_strrevolve(char *str, unsigned int wide, unsigned int tall);
 void	tetprint(t_etris *t);

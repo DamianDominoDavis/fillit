@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damiandavis <damiandavis@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 21:11:17 by cbrill            #+#    #+#             */
-/*   Updated: 2018/04/21 14:33:42 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/13 13:56:08 by damiandavis      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	ft_memdel(void **p)
 	if (p)
 	{
 		free(*p);
-		*p = NULL;
+//		*p = NULL;
 	}
 }

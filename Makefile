@@ -70,4 +70,7 @@ just: re clean
 do: just
 		./$(NAME) $(TARGET)
 
+leaks:
+	@$(CC) $(FLAGS) $(INC) $(OBJ) -o $(NAME) $(LIBFT) -g -fsanitize=address
+
 .PHONY : all, re, libsync, clean, libclean, flcean, libfclean, just, do

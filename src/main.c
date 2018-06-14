@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damiandavis <damiandavis@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/08 04:24:31 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/13 14:05:57 by damiandavis      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		main(int c, char **v)
 	i = -1;
 	while (++i < 27)
 	{
-		if (!(pieces[i] = (t_etris*)ft_memalloc(sizeof(t_etris*))))
+		if (!(pieces[i] = (t_etris*)ft_memalloc(sizeof(t_etris))))
 			return nope("main: OOM", 2, 0);
 		pieces[i]->str = NULL;
 	}
@@ -57,7 +57,11 @@ int		readpieces(int fd, t_etris *pieces[])
 	while (count <= 26 && (rcount = read(fd, candidate, 20)) == 20)
 	{
 		if (ispattern(candidate))
-			pieces[count++] = makepiece(candidate);
+		{
+			printf("bloop");
+			makepiece(candidate, pieces[count++]);
+			printf("blip");
+		}
 		else
 			return nope("readpieces: pattern format error", 2, 0);
 		rcount = read(fd, candidate, 1);
@@ -100,20 +104,22 @@ int		ispattern(char *p)
 	return (1);
 }
 
-t_etris	*makepiece(char *pattern)
+void	makepiece(char *pattern, t_etris *t)
 {
-	t_etris	*out;
+	//t_etris	*out;
 
 	while (ft_strchr(pattern, '#') - &pattern[0] >= 4)
 		ft_strshift(pattern, 5);
+	printf("a");
 	while (pattern[0] != '#' && pattern[5] != '#' && pattern[10] != '#'
 		&& pattern[15] != '#')
 		ft_strrevolve(pattern, 5, 4);
-	if (!(out = (t_etris*)ft_memalloc(sizeof(t_etris*))))
-		ft_putendl_fd("makepiece: OOM", 2);
-	out->str = ft_strdup(ft_stripch(pattern, ft_strlen(pattern), '\n'));
-	sizepiece(out);
-	return (out);
+	printf("b");
+	//if (!(out = (t_etris*)ft_memalloc(sizeof(t_etris*))))
+	//	ft_putendl_fd("makepiece: OOM", 2);
+	t->str = ft_strdup(ft_stripch(pattern, ft_strlen(pattern), '\n'));
+	sizepiece(t);
+	//return (out);
 }
 
 void	sizepiece(t_etris *t)
@@ -188,7 +194,7 @@ char	**solve(t_etris *pieces[])
 	count = 0;
 	while (pieces[count]->str)
 		count++;
-	size = 2;
+	size = 26;
 	while (size * size < count * 4)
 		size++;
 	board = makeboard(size);
@@ -235,7 +241,7 @@ void	unmakeboard(char **board)
 		i++;
 	}
 	ft_memdel((void **)&(board));
-	ft_memdel((void **)&board);
+//	ft_memdel((void **)&board);
 }
 
 int		solveboard(char **board, t_etris *pieces[], int i)
@@ -248,14 +254,15 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 		return (1);
 	size = ft_strlen(board[0]);
 	y = -1;
-	while (++y < size - pieces[i]->h)
+	while (++y < size - pieces[i]->h  + 1)
 	{
 		x = -1;
-		while (++x < size - pieces[i]->w)
+		while (++x < size - pieces[i]->w + 1)
 		{
 			printf("t[%d]@(%d,%d)?", i, x, y);
 			if (canplace(pieces[i], board, x, y))
 			{
+			  printf("after canplace\n");
 				place(pieces[i], board, x, y);
 				printf(" yes\n");
 				if (solveboard(board, pieces, i + 1))
@@ -278,12 +285,13 @@ int		canplace(t_etris *t, char **board, int x, int y)
 	int i;
 	int size;
 
-	//ft_putendl("canplace");
+	printf("canplace");
 	size = ft_strlen(board[0]);
 	i = -1;
 	while (++i < 4)
 		if (x + t->x[i] >= size || y + t->y[i] >= size || board[y + t->y[i]][x + t->x[i]] != '.')
 			return (0);
+	printf("!!!!!!!!!!!!!!!!\n");
 	return (1);
 }
 
@@ -291,7 +299,7 @@ void	replace(t_etris *t, char **board, int x, int y)
 {
 	int i;
 
-	//ft_putendl("replace");
+	printf("replace");
 	i = -1;
 	while (++i < 4)
 	{
