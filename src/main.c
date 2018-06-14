@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/13 22:32:57 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/13 23:00:59 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 			else
 				printf(" no\n");
 		}
-		printf("solveboard: t[%d] doesn't fit on row %d\n", i, y);
+		printf("solveboard: t[%d] doesn't fit on row %d/%d\n", i, y, size);
 	}
 	printf("solveboard: t[%d] doesn't fit on board size%d\n", i, size);
 	return (0);
@@ -318,7 +318,8 @@ int		canplace(t_etris *t, char **board, int x, int y)
 	while (++i < 4)
 		if (x + t->x[i] >= size || y + t->y[i] >= size
 			|| board[y + t->y[i]][x + t->x[i]] != '.'
-			|| (!hasneighbor(board, x, y)))
+			//|| (!hasneighbor(board, x, y))
+			)
 			return (0);
 	return (1);
 }
