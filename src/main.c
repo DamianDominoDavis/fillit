@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:51:01 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/13 23:00:59 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/14 19:03:32 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,10 +255,10 @@ void	resizeboard(char **board, int size)
 
 	maxp = 100;
 	y = -1;
-	while (++y < maxp)
+	while (++y <= maxp)
 	{
 		x = -1;
-		while (++x < maxp)
+		while (++x <= maxp)
 		{
 			board[y][x] = (y < size && x < size) ? '.' : '\0';
 		}
@@ -278,10 +278,10 @@ int		solveboard(char **board, t_etris *pieces[], int i)
 	size = ft_strlen(board[0]);
 	printf("solveboard: size=%d\n", size);
 	y = -1;
-	while (++y < size - pieces[i]->h + 1)
+	while (++y + pieces[i]->h <= size)
 	{
 		x = -1;
-		while (++x < size - pieces[i]->w + 1)
+		while (++x + pieces[i]->w <= size)
 		{
 			printf("t[%d]<%d,%d>@(%d,%d)?", i, pieces[i]->w, pieces[i]->h, x, y);
 			if (canplace(pieces[i], board, x, y))
@@ -311,15 +311,13 @@ int		canplace(t_etris *t, char **board, int x, int y)
 	int size;
 
 	//printf("canplace");
-	if (t->id == 'A' && x == 0 && y == 0)
-		return (1);
+	// if (t->id == 'A')
+	// 	return (1);
 	size = ft_strlen(board[0]);
 	i = -1;
 	while (++i < 4)
 		if (x + t->x[i] >= size || y + t->y[i] >= size
-			|| board[y + t->y[i]][x + t->x[i]] != '.'
-			//|| (!hasneighbor(board, x, y))
-			)
+			|| board[y + t->y[i]][x + t->x[i]] != '.')
 			return (0);
 	return (1);
 }
