@@ -6,7 +6,7 @@
 #    By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/05 16:54:43 by cbrill            #+#    #+#              #
-#    Updated: 2018/06/08 03:26:10 by cbrill           ###   ########.fr        #
+#    Updated: 2018/06/17 15:20:34 by cbrill           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 	@mkdir -p $(LPATH) includes src
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(OBJ)
 	@$(CC) $(FLAGS) $(INC) $(OBJ) -o $(NAME) $(LIBFT)
 
 $(OBJ): $(LIBFT)
@@ -51,13 +51,13 @@ libsync:
 	@git clone $(LSRC) $(LPATH)
 	@rm -rf $(LPATH)/._git
 
-clean: libclean
+clean:
 	@rm -f $(OBJ)
 
 libclean:
 	@make clean -C $(LPATH)
 
-fclean: clean libfclean
+fclean: clean
 	@rm -f $(NAME)
 
 libfclean:
