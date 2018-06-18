@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:39:39 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/13 22:24:13 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/17 17:50:24 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 
 # include <unistd.h>
 # include <fcntl.h>
-# include "../src/libft/libft.h"
-//REMOVE LATER
-# include <stdio.h>
+# include "libft.h"
 
 typedef struct	s_etris
 {
