@@ -91,8 +91,9 @@ char				*ft_strndup(const char *str, size_t n);
 int					ft_stroverlap(const char *s1, const char *s2);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
-int					ft_countch(const char* str, const unsigned char ch);
-char				*ft_stripch(const char* str, unsigned int n, const unsigned char ch);
-char				*ft_stripnl(const char* str);
+int					ft_countch(const char *str, const unsigned char ch);
+char				*ft_stripch(const char *str, unsigned int n,
+						const unsigned char ch);
+char				*ft_stripnl(const char *str);
 
 #endif

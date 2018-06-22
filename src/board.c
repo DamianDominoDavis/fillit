@@ -18,7 +18,7 @@ char	**makeboard(char **board, int size)
 	int		j;
 	int		maxp;
 
-	maxp = 100;
+	maxp = 12;
 	board = (char **)ft_memalloc(sizeof(char*) * (maxp + 1));
 	i = 0;
 	while (i <= maxp)
@@ -41,7 +41,9 @@ void	resizeboard(char **board, int size)
 	int y;
 	int maxp;
 
-	maxp = 100;
+	if (size > 11)
+		ft_putendl("resizeboard is gonna fail");
+	maxp = 12;
 	y = -1;
 	while (++y <= maxp)
 	{

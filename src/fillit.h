@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <fcntl.h>
-# include "libft.h"
+# include "libft/libft.h"
 
 typedef struct	s_etris
 {
@@ -27,26 +27,27 @@ typedef struct	s_etris
 	char		id;
 }				t_etris;
 
-int		nope(char *msg, int fd, int rvalue);
-int		readpieces(int fd, t_etris *pieces[]);
-int		ispattern(char *p);
-void	makepiece(char *pattern, t_etris *t, char id);
-void	sizepiece(t_etris *t);
-void	ft_strrevolve(char *str, unsigned int wide, unsigned int tall);
-void	tetprint(t_etris *t);
-char	**solve(t_etris *pieces[]);
-char	**makeboard(char **board, int size);
-void	resizeboard(char **board, int size);
-int		solveboard(char **board, t_etris *pieces[], int i);
-int		canplace(t_etris *t, char **board, int x, int y);
-int		hasneighbor(char **board, int x, int y);
-void	replace(t_etris *t, char **map, int x, int y);
-void	place(t_etris *t, char **map, int x, int y);
-void	unplace(t_etris *t, char **map, int x, int y);
-void	free_tetris(t_etris *tetri);
-int		ft_countch(const char *str, const unsigned char ch);
-char	*ft_stripch(const char *str, unsigned int n, const unsigned char ch);
-void	ft_strshift(char *str, unsigned int n);
-void	printboard(char **board);
+int				nope(char *msg, int fd, int rvalue);
+int				readpieces(int fd, t_etris *pieces[]);
+int				ispattern(char *p);
+void			makepiece(char *pattern, t_etris *t, char id);
+void			sizepiece(t_etris *t);
+void			ft_strrevolve(char *str, unsigned int wide, unsigned int tall);
+void			tetprint(t_etris *t);
+char			**solve(t_etris *pieces[]);
+char			**makeboard(char **board, int size);
+void			resizeboard(char **board, int size);
+int				solveboard(char **board, t_etris *pieces[], int i);
+int				canplace(t_etris *t, char **board, int x, int y);
+int				hasneighbor(char **board, int x, int y);
+void			replace(t_etris *t, char **map, int x, int y);
+void			place(t_etris *t, char **map, int x, int y);
+void			unplace(t_etris *t, char **map, int x, int y);
+void			free_tetris(t_etris *tetri);
+int				ft_countch(const char *str, const unsigned char ch);
+char			*ft_stripch(const char *str, unsigned int n,
+					const unsigned char ch);
+void			ft_strshift(char *str, unsigned int n);
+void			printboard(char **board);
 
 #endif

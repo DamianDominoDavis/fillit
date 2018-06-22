@@ -20,7 +20,7 @@ SRC_PATH = src/
 
 SRC_POS = $(addprefix $(SRC_PATH),$(SRC))
 
-LIBFT =	src/libft.a
+LIBFT =	src/libft/libft.a
 
 CC = gcc
 
