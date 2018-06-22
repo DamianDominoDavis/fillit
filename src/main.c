@@ -31,11 +31,11 @@ int		main(int c, char **v)
 	while (++i < 27)
 	{
 		if (!(pieces[i] = (t_etris*)ft_memalloc(sizeof(t_etris))))
-			return (nope("error", 2, 0));
+			return (nope("error", 1, 0));
 		pieces[i]->str = NULL;
 	}
 	if ((readpieces(open(v[1], O_RDONLY), pieces)) == 0)
-		return (nope("error", 2, 0));
+		return (nope("error", 1, 0));
 	board = solve(pieces);
 	printboard(board);
 	return (0);
