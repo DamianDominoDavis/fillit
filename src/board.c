@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/17 15:57:57 by cbrill            #+#    #+#             */
-/*   Updated: 2018/06/17 17:47:24 by cbrill           ###   ########.fr       */
+/*   Updated: 2018/06/21 18:25:14 by calamber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**makeboard(char **board, int size)
 	int		j;
 	int		maxp;
 
-	maxp = 12;
+	maxp = 26;
 	board = (char **)ft_memalloc(sizeof(char*) * (maxp + 1));
 	i = 0;
 	while (i <= maxp)
@@ -41,9 +41,7 @@ void	resizeboard(char **board, int size)
 	int y;
 	int maxp;
 
-	if (size > 11)
-		ft_putendl("resizeboard is gonna fail");
-	maxp = 12;
+	maxp = 26;
 	y = -1;
 	while (++y <= maxp)
 	{
